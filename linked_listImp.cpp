@@ -10,6 +10,7 @@ Node::Node()
 left = NULL;
 right = NULL;
 data = 0;
+height = NULL;
 }
 LinkedList::LinkedList()
 {
@@ -30,6 +31,7 @@ Node* LinkedList::create(int data)
 	n->data = data;
 	n->left = NULL;
 	n->right = NULL;
+	n->height = get_height(n);
 	return n;
 }
 
@@ -81,7 +83,7 @@ void LinkedList::preorderTrav()
 void LinkedList::preorder(Node* p)
 {
 if (p != NULL){
-cout << p->data << endl;
+cout << p->data << " with height: " << p->height << endl;
 outFile << p->data << endl;
 preorder(p->left);
 preorder(p->right);
@@ -101,7 +103,7 @@ void LinkedList::postorder(Node* p)
 if (p != NULL){
 postorder(p->left);
 postorder(p->right);
-cout << p->data << endl;
+cout << p->data << " with height: " << p->height << endl;
 outFile << p->data << endl;
 }
 }
@@ -119,7 +121,7 @@ void LinkedList::inorder(Node* p)
 {
 if (p !=NULL){
 inorder(p->left);
-cout << p->data << endl;
+cout << p->data << " with height: " << p->height << endl;
 outFile << p->data << endl;
 inorder(p->right);
 }
@@ -171,7 +173,30 @@ int LinkedList::find(int q)
 
 }
 
+int LinkedList::get_height(Node* n)
+{
 
+        if(n->left == NULL && n->right == NULL)
+        {
+                return -1;
+        }
+
+	int leftHeight = get_height(n->left);
+	int rightHeight = get_height(n->right);
+
+	if(leftHeight > rightHeight)
+		return leftHeight + 1;
+	else
+		return rightHeight + 1;
+
+}
+
+void LinkedList::avlCheck(Node* n)
+{
+	if(get_height(n->left) - get_height(n->right) > 1 || get_height(n->left) - get_height(n->right) < -1)
+		cout << "Rotate function goes here" << endl;
+		// rotate function goes here
+}
 
 
 /*void LinkedList::add(int data)

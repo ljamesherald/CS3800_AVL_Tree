@@ -11,6 +11,7 @@ public:
    	Node* left;
 	Node* right;
 	int data;
+	int height;
 };
 
 
@@ -32,6 +33,9 @@ public:
 	void postorder(Node* p);
 	void inorder(Node* p);
 	void setRoot();
+	void avlCheck(Node* n);
 	int find(int data);
+	int get_height(Node* n);
+
 };
 
