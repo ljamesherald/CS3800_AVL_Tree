@@ -28,6 +28,8 @@ int main()
 		l.postorderTrav();
 		cout << endl << "Inorder" << endl;
 		l.inorderTrav();
+		cout << "The depth of the tree is " << l.get_depth(l.root) << "." << endl;
+		
 		cout << endl << "Input a number to search for" << endl;
 		l.setRoot();
 		cin >> f;

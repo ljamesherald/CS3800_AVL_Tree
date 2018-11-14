@@ -11,7 +11,6 @@ public:
    	Node* left;
 	Node* right;
 	int data;
-	int height;
 };
 
 
@@ -35,7 +34,7 @@ public:
 	void setRoot();
 	void avlCheck(Node* n);
 	int find(int data);
-	int get_height(Node* n);
+	int get_depth(Node* n);
 
 };
 
