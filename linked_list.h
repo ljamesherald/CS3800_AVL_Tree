@@ -33,8 +33,13 @@ public:
 	void inorder(Node* p);
 	void setRoot();
 	void avlCheck(Node* n);
+	void rotateLeft(Node* & n2);
+	void doubleRotateLeft(Node* & n3);
+	void rotateRight(Node* & n2);
+	void doubleRotateRight(Node* & n3);
+	void balance(Node* & n);
 	int find(int data);
 	int get_depth(Node* n);
-
+	
 };
 

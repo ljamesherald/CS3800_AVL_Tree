@@ -67,7 +67,8 @@ void LinkedList::insert(int data)
 		cout << data << " is equal to another data entry." << endl;
 		current = root;
 	}
-		
+
+	
 }
 
 void LinkedList::preorderTrav()
@@ -192,6 +193,63 @@ int LinkedList::get_depth(Node* n)
 			else
 				return(right_depth + 1);
 		}
+}
+		
+void LinkedList::rotateLeft(Node* & n2)
+{
+	Node *n1 = n2->left;
+	n2->left = n1->right;
+	n1->right = n2;
+	n2 = n1;
+}
+
+void LinkedList::doubleRotateLeft(Node* & n3)
+{
+		rotateRight(n3->left);
+		rotateLeft(n3);
+}
+	
+void LinkedList::rotateRight(Node* & n2)
+{
+	Node *n1 = n2->right;
+	n2->right = n1->left;
+	n1->left = n2;
+	n2 = n1;
+}	
+	
+void LinkedList::doubleRotateRight(Node* & n3)
+{
+		rotateLeft(n3->right);
+		rotateRight(n3);
+}
+
+
+void LinkedList::avlCheck(Node* n)
+{
+		if(get_depth(n->left) - get_depth(n->right) <= 1 && get_depth(n->left) - get_depth(n->right) >= -1)
+			cout << "No need to balance." << endl;
+		else
+			balance(n);
+}
+
+	
+void LinkedList::balance(Node* & n)
+{
+	if(n == NULL)
+		return;
+	
+	if(get_depth(n->left) - get_depth(n->right) > 1)
+		if(get_depth(n->left->left) >= get_depth(n->left->right))
+			rotateLeft(n);
+		else
+			doubleRotateLeft(n);
+	else
+		if(get_depth(n->right) - get_depth(n->left) > 1)
+			if(get_depth(n->right->right) >= get_depth(n->right->left))
+				rotateRight(n);
+			else
+				doubleRotateRight(n);
+}
 		
 		
 /*
@@ -203,14 +261,6 @@ int LinkedList::get_depth(Node* n)
 	else
 		return rightHeight + 1;
 */
-}
-
-void LinkedList::avlCheck(Node* n)
-{
-	//if(get_height(n->left) - get_height(n->right) > 1 || get_height(n->left) - get_height(n->right) < -1)
-		cout << "Rotate function goes here" << endl;
-		// rotate function goes here
-}
 
 
 /*void LinkedList::add(int data)

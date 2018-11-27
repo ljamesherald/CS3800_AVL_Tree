@@ -21,6 +21,7 @@ int main()
 			int temp;
 			inFile >> temp;
 			l.insert(temp);
+			l.avlCheck(l.current);
 		}
 		cout << endl << "Preorder" << endl;
 		l.preorderTrav();
