@@ -23,7 +23,7 @@ public:
 	~LinkedList();
 	ifstream inFile;
 	ofstream outFile;
-	void insert (int data);
+	Node* insert (Node* root, int value);
 	Node* create(int data);
 	void preorderTrav();
 	void postorderTrav();
@@ -33,13 +33,14 @@ public:
 	void inorder(Node* p);
 	void setRoot();
 	void avlCheck(Node* n);
-	void rotateLeft(Node* & n2);
-	void doubleRotateLeft(Node* & n3);
-	void rotateRight(Node* & n2);
-	void doubleRotateRight(Node* & n3);
-	void balance(Node* & n);
+	Node* rotateLeft(Node* n2);
+	Node* doubleRotateLeft(Node* n3);
+	Node* rotateRight(Node* n2);
+	Node* doubleRotateRight(Node* n3);
+	Node* balance(Node* n);
 	int find(int data);
 	int get_depth(Node* n);
+	int depthDiff(Node *temp);
 	
 };
 

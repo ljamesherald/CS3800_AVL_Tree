@@ -13,12 +13,8 @@ data = 0;
 }
 LinkedList::LinkedList()
 {
-   // this->length = 0;
 	root = NULL;
 	int depth = 0;
-	//root->data = 0;
-	//root->left = NULL;
-	//root->right = NULL;
 }
 
 LinkedList::~LinkedList()
@@ -34,41 +30,28 @@ Node* LinkedList::create(int data)
 	return n;
 }
 
-void LinkedList::insert(int data)
-{
-	if (root == NULL) {
-		root = create(data);
-		current = root;
-	}
-	else if (data < current->data) {
-		if (current->left != NULL) {
-			current = current->left;
-			insert(data);	
-		}
-		else
-		{
-			current->left = create(data);
-			current = root;
-		}
-	}
-	else if (data > current->data) {
-		if (current->right != NULL) {
-			current = current->right;
-			insert(data);
-		}
-		else
-		{
-			current->right = create(data);
-			current = root;
-		}
-	}
-	else
-	{
-		cout << data << " is equal to another data entry." << endl;
-		current = root;
-	}
 
-	
+Node *LinkedList::insert(Node *root, int value)
+{
+    if (root == NULL)
+    {
+        root = new Node;
+        root->data = value;
+        root->left = NULL;
+        root->right = NULL;
+        return root;
+    }
+    else if (value < root->data)
+    {
+        root->left = insert(root->left, value);
+        root = balance(root);
+    }
+    else if (value >= root->data)
+    {
+        root->right = insert(root->right, value);
+        root = balance(root);
+    }
+    return root;
 }
 
 void LinkedList::preorderTrav()
@@ -195,91 +178,66 @@ int LinkedList::get_depth(Node* n)
 		}
 }
 		
-void LinkedList::rotateLeft(Node* & n2)
+int LinkedList::depthDiff(Node *temp)
+{
+    int l_depth = get_depth(temp->left);
+    int r_depth = get_depth(temp->right);
+    int depthDifference = l_depth - r_depth;
+    return depthDifference;
+}
+
+		
+Node *LinkedList::rotateLeft(Node* n2)
 {
 	Node *n1 = n2->left;
 	n2->left = n1->right;
 	n1->right = n2;
-	n2 = n1;
+	return n1;
 }
 
-void LinkedList::doubleRotateLeft(Node* & n3)
+Node *LinkedList::doubleRotateLeft(Node* n3)
 {
-		rotateRight(n3->left);
-		rotateLeft(n3);
+	Node* n2 = n3->left;
+	n3->left = rotateRight(n2);
+	return rotateRight(n3);
 }
 	
-void LinkedList::rotateRight(Node* & n2)
+Node *LinkedList::rotateRight(Node* n2)
 {
 	Node *n1 = n2->right;
 	n2->right = n1->left;
 	n1->left = n2;
-	n2 = n1;
+	return n1;
 }	
 	
-void LinkedList::doubleRotateRight(Node* & n3)
+Node *LinkedList::doubleRotateRight(Node* n3)
 {
-		rotateLeft(n3->right);
-		rotateRight(n3);
-}
-
-
-void LinkedList::avlCheck(Node* n)
-{
-		if(get_depth(n->left) - get_depth(n->right) <= 1 && get_depth(n->left) - get_depth(n->right) >= -1)
-			cout << "No need to balance." << endl;
-		else
-			balance(n);
+		Node* n2 = n3->right;
+		n3->right = rotateLeft(n2);
+		return rotateRight(n3);
 }
 
 	
-void LinkedList::balance(Node* & n)
+Node *LinkedList::balance(Node* n)
 {
-	if(n == NULL)
-		return;
-	
-	if(get_depth(n->left) - get_depth(n->right) > 1)
-		if(get_depth(n->left->left) >= get_depth(n->left->right))
-			rotateLeft(n);
-		else
-			doubleRotateLeft(n);
-	else
-		if(get_depth(n->right) - get_depth(n->left) > 1)
-			if(get_depth(n->right->right) >= get_depth(n->right->left))
-				rotateRight(n);
-			else
-				doubleRotateRight(n);
+	int depthDifference = depthDiff(n);
+    if (depthDifference > 1)
+    {
+        if (depthDiff(n->left) > 0)
+            n = rotateLeft(n);
+        else
+            n = doubleRotateLeft(n);
+    }
+    else if (depthDifference < -1)
+    {
+        if (depthDiff(n->right) > 0)
+            n = doubleRotateRight(n);
+        else
+            n = rotateRight(n);
+    }
+    return n;
+
 }
 		
 		
-/*
-	int leftHeight = get_height(n->left);
-	int rightHeight = get_height(n->right);
 
-	if(leftHeight > rightHeight)
-		return leftHeight + 1;
-	else
-		return rightHeight + 1;
-*/
-
-
-/*void LinkedList::add(int data)
-{
-    Node* node = new Node();
-    node->data = data;
-    node->next = this->head;
-    this->head = node;
-    this->length++;
-}*/
-
-/*void LinkedList::print()
-{
-    Node* head = this->head;
-    int i = 1;
-    while(head)
-	{
-        cout << i << ": " << head->data << std::endl;
-        head = head->next;
-        i++;
-	}
-}*/

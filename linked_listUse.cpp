@@ -9,7 +9,6 @@ using namespace std;
 int main()
 {
 	LinkedList();
-       // int test[20429];
 	ifstream inFile;
 	inFile.open("lots_ints.txt");
 	LinkedList l;
@@ -20,8 +19,7 @@ int main()
 		for (int i = 0; i < n; i++) {
 			int temp;
 			inFile >> temp;
-			l.insert(temp);
-			l.avlCheck(l.current);
+			l.root = l.insert(l.root, temp);
 		}
 		cout << endl << "Preorder" << endl;
 		l.preorderTrav();
@@ -35,14 +33,6 @@ int main()
 		l.setRoot();
 		cin >> f;
 		l.find(f);
-
-
-	/*for (int i = 0; i < 20429; i++){
-		inFile >> test[i];
-	}
-        for (int j = 0; j < 20429; j++){
-		cout << test[j] << endl;
-	}*/
 	inFile.close();
     return 0;
 }
